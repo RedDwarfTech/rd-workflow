@@ -28,6 +28,13 @@ jobs:
   publish:
     runs-on: ubuntu-22.04
     steps:
+      - name: Print all inputs and context
+        run: |
+          echo "app tag: ${{ inputs.app-tag }}"
+          echo "app name: ${{ inputs.app-name }}"
+          echo "app namespace: ${{ inputs.app-namespace }}"
+          echo "node version: ${{ inputs.node-version }}"
+          echo "target: ${{ inputs.target }}"
       - name: Check tag code
         if: ${{ inputs.app-tag != 'default' }}
         uses: actions/checkout@v4
