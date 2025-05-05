@@ -19,14 +19,26 @@ on:
         required: true
         type: string
         default: "demo-app"
+      app-tag:
+        required: false
+        type: string
+        default: "default"
 
 jobs:
   publish:
     runs-on: ubuntu-22.04
     steps:
-      - name: Checkout
+      - name: Check tag code
+        if: ${{ inputs.app-tag != 'default' }}
         uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+        with:
+          ref: refs/tags/${{ inputs.app-tag }}
+          fetch-depth: 0
+      - name: Checkout
+        if: ${{ inputs.app-tag == 'default' }}
+        uses: actions/checkout@v4
+      - name: Setup node
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ inputs.node-version }}
       - uses: pnpm/action-setup@v3
