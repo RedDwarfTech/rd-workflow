@@ -1,0 +1,24 @@
+name: Web application publish to k8s
+
+on:
+  workflow_call:
+    inputs:
+      target:
+        required: true
+        type: string
+        default: ""
+
+jobs:
+  publish:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: $NODE_VERSION
+
+
+
+
+
