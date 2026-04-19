@@ -24,7 +24,7 @@ on:
         type: string
         default: "demo-app"
 
-      build-app-name:
+      image-name:
         required: true
         type: string
         default: "demo-app"
@@ -96,7 +96,7 @@ jobs:
         uses: steebchen/kubectl@v2.0.0
         with: # defaults to latest kubectl binary version
           config: ${{ secrets.KUBE_CONFIG_DATA }}
-          command: set image --record deployment/${{ inputs.app-name }} ${{ inputs.app-name }}=registry.cn-hongkong.aliyuncs.com/${{ inputs.app-namespace }}/${{ inputs.build-app-name }}:${{ github.sha }} -n ${{ inputs.app-namespace }}
+          command: set image --record deployment/${{ inputs.app-name }} ${{ inputs.app-name }}=registry.cn-hongkong.aliyuncs.com/${{ inputs.app-namespace }}/${{ inputs.image-name }}:${{ github.sha }} -n ${{ inputs.app-namespace }}
 
       - name: verify deployment
         uses: steebchen/kubectl@v2.0.0
