@@ -7,6 +7,10 @@ on:
         required: true
         type: string
         default: ""
+      dockerfile:
+        required: true
+        type: string
+        default: "Dockerfile"
       rust-version:
         required: false
         type: string
@@ -33,7 +37,6 @@ jobs:
           echo "app tag: ${{ inputs.app-tag }}"
           echo "app name: ${{ inputs.app-name }}"
           echo "app namespace: ${{ inputs.app-namespace }}"
-          echo "node version: ${{ inputs.node-version }}"
           echo "target: ${{ inputs.target }}"
       - name: Check tag code
         if: ${{ inputs.app-tag != 'default' }}
@@ -79,7 +82,7 @@ jobs:
           tags: ${{ secrets.ALI_DOCKER_HUB_REGISTRY }}/${{ inputs.app-namespace }}/${{ inputs.app-name }}:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          file: Dockerfile
+          file: ${{ inputs.dockerfile }}
           platforms: linux/amd64
           push: true
     
