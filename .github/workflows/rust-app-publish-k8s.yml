@@ -88,8 +88,9 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           file: ${{ inputs.dockerfile }}
-          platforms: linux/amd64
           push: true
+          provenance: false
+          sbom: false
     
         # https://github.com/steebchen/kubectl
       - name: deploy to cluster
