@@ -19,6 +19,10 @@ on:
         required: true
         type: string
         default: "demo-app"
+      image-name:
+        required: true
+        type: string
+        default: "demo-app"
       app-tag:
         required: false
         type: string
@@ -72,7 +76,7 @@ jobs:
         uses: docker/build-push-action@v7
         with:
           context: .
-          tags: ${{ secrets.ALI_DOCKER_HUB_REGISTRY }}/${{ inputs.app-namespace }}/${{ inputs.app-name }}:${{ github.sha }} 
+          tags: ${{ secrets.ALI_DOCKER_HUB_REGISTRY }}/${{ inputs.app-namespace }}/${{ inputs.image-name }}:${{ github.sha }} 
           cache-from: type=gha
           cache-to: type=gha,mode=max
           file: Dockerfile
@@ -83,7 +87,7 @@ jobs:
         uses: steebchen/kubectl@v2.0.0
         with: # defaults to latest kubectl binary version
           config: ${{ secrets.KUBE_CONFIG_DATA }}
-          command: set image --record deployment/${{ inputs.app-name }} ${{ inputs.app-name }}=registry.cn-hongkong.aliyuncs.com/${{ inputs.app-namespace }}/${{ inputs.app-name }}:${{ github.sha }} -n ${{ inputs.app-namespace }}
+          command: set image --record deployment/${{ inputs.app-name }} ${{ inputs.app-name }}=registry.cn-hongkong.aliyuncs.com/${{ inputs.app-namespace }}/${{ inputs.image-name }}:${{ github.sha }} -n ${{ inputs.app-namespace }}
 
       - name: verify deployment
         uses: steebchen/kubectl@v2.0.0
